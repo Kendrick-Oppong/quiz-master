@@ -29,7 +29,7 @@ html {
     font-optical-sizing: auto;
     font-family: "Rubik", sans-serif;
     background-color: ${(props) => props.theme.lightGrey};
-    /* color: ${(props) => props.theme.darkNavy}; */
+    color: ${(props) => props.theme.darkNavy};
       @media (max-width: 768px) {
          padding: 1.5rem;
     }
