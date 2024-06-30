@@ -7,16 +7,15 @@ interface ProgressBarProps {
 const ProgressBarContainer = styled.div`
   margin-top: 5rem;
   width: 100%;
-  background-color: ${(props) => props.theme.lightGrey};
+  background-color: ${(props) => props.theme.pureWhite};
   border-radius: 1rem;
   overflow: hidden;
- 
 `;
 
 const ProgressBarFill = styled.div<{ progress: number }>`
   width: ${(props) => props.progress}%;
   background-color: ${(props) => props.theme.purple};
-  height: 1rem;
+  height: 0.8rem;
   transition: width 0.3s ease-in-out;
 `;
 

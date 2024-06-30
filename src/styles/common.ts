@@ -6,6 +6,7 @@ interface BgColorProps {
 }
 
 export const Main = styled.main`
+  font-family: "Rubik", sans-serif;
   margin-top: 4rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);

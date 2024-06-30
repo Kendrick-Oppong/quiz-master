@@ -28,8 +28,14 @@ html {
     box-sizing: border-box;
     font-optical-sizing: auto;
     font-family: "Rubik", sans-serif;
+    min-height: 100dvh;
+    background-image: url(./assets/images/pattern-background-desktop-light.svg);
+    background-position: center;
+    background-size: cover;
     background-color: ${(props) => props.theme.lightGrey};
     color: ${(props) => props.theme.darkNavy};
+
+
       @media (max-width: 768px) {
          padding: 1.5rem;
     }

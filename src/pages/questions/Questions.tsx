@@ -7,6 +7,8 @@ import {
   answerQuestion,
   getAllCurrentQuestionIndex,
   nextQuestion,
+  setQuizCategory,
+  setTotalQuestions,
 } from "../../redux/features/quizSlice";
 import { Main } from "../../styles/common";
 import { CircleCheck, CircleX } from "lucide-react";
@@ -128,6 +130,15 @@ export const Questions = () => {
     }
   }, [currentQuestionIndex, listItemRefs]);
 
+  useEffect(() => {
+    if (quiz) {
+      dispatch(
+        setQuizCategory({ category: quiz.title, categoryImage: quiz.icon })
+      );
+      dispatch(setTotalQuestions(quiz.questions.length));
+    }
+  }, [quiz, dispatch]);
+
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
     setErrorMessage(null);
@@ -139,9 +150,15 @@ export const Questions = () => {
       return;
     }
 
+    const isCorrect =
+      selectedOption === quiz!.questions[currentQuestionIndex].answer;
     setShowAnswer(true);
     dispatch(
-      answerQuestion({ index: currentQuestionIndex, answer: selectedOption })
+      answerQuestion({
+        index: currentQuestionIndex,
+        answer: selectedOption,
+        correct: isCorrect,
+      })
     );
   };
 
