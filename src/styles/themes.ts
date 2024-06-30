@@ -10,6 +10,10 @@ export const lightTheme = {
   whiteOverlay: "hsla(0,0%,100%,.5)",
   correctAnswer: "#26d782",
   incorrectAnswer: "#ee5454",
+  htmlBg: "#fff1e9",
+  cssBg: "#e0fdef",
+  jsBg: "#ebf0ff",
+  accessibilityBg: "#f6e7ff",
 };
 
 export const darkTheme = {
