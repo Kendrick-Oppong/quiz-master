@@ -7,6 +7,6 @@ export const router = createBrowserRouter([
     errorElement: <p> Not found</p>,
     element: <HomePage />,
   },
-  { path: "subject/:id", element: <Questions /> },
+  { path: "subject/:title", element: <Questions /> },
   { path: "score", element: <Score /> },
 ]);
