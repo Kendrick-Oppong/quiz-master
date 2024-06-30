@@ -11,11 +11,13 @@ import {
 import { Main } from "../../styles/common";
 import { CircleCheck, CircleX } from "lucide-react";
 import { useListNavigation } from "../../hooks/useListNavigation";
+import { ProgressBar } from "../../components";
 
 interface isActiveProp {
   isActive: boolean;
   isHovered: boolean;
 }
+
 const QuestionHeader = styled.p`
   font-size: 1.3rem;
   margin-top: 2rem;
@@ -159,6 +161,8 @@ export const Questions = () => {
   }
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
+  const progress = ((currentQuestionIndex + 1) / quiz.questions.length) * 100;
+  const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
 
   return (
     <Main>
@@ -167,6 +171,9 @@ export const Questions = () => {
           Question {currentQuestionIndex + 1} of {quiz.questions.length}
         </QuestionHeader>
         <Question>{currentQuestion.question}</Question>
+
+        {/* Progress bar */}
+        <ProgressBar progress={progress} />
       </div>
       <div>
         <OptionsContainer>
@@ -220,7 +227,11 @@ export const Questions = () => {
           })}
         </OptionsContainer>
         <SubmitButton onClick={showAnswer ? handleNextQuestion : handleSubmit}>
-          {showAnswer ? "Next Question" : "Submit Answer"}
+          {showAnswer
+            ? isLastQuestion
+              ? "View Score"
+              : "Next Question"
+            : "Submit Answer"}
         </SubmitButton>
         {errorMessage && (
           <ErrorMessage>
