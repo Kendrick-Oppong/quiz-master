@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { lightTheme } from "../../styles/themes";
 import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 interface BgColorProps {
   bgColor: keyof typeof lightTheme;
@@ -17,6 +18,7 @@ const Main = styled.main`
     padding: 1rem;
   }
 `;
+
 const WelcomeDiv = styled.div`
   h1 {
     font-size: 4rem;
@@ -42,11 +44,13 @@ const WelcomeDiv = styled.div`
     }
   }
 `;
+
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `;
+
 const ListItem = styled.li<BgColorProps>`
   display: flex;
   align-items: center;
@@ -58,7 +62,9 @@ const ListItem = styled.li<BgColorProps>`
   background-color: ${(props) => props.theme.pureWhite};
   transition: background-color 0.3s ease-in-out;
 
-  &:hover {
+  /* Ensure list items are focusable and have appropriate hover styles */
+  &:hover,
+  &:focus {
     background-color: ${(props) => props.theme[props.bgColor]};
   }
 
@@ -70,12 +76,49 @@ const ListItem = styled.li<BgColorProps>`
     font-size: 1.5rem;
   }
 `;
+
 const IconImage = styled.img<BgColorProps>`
   background-color: ${(props) => props.theme[props.bgColor]};
   border-radius: 5px;
   padding: 0.5rem;
 `;
+
 export const HomePage = () => {
+  const listItemRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const [focusedItemIndex, setFocusedItemIndex] = useState<number>(0);
+
+  useEffect(() => {
+    // Focus the first list item initially when the component mounts
+    if (listItemRefs.current.length > 0) {
+      listItemRefs.current[0]?.focus();
+    }
+  }, []);
+
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLLIElement>,
+    index: number
+  ) => {
+    if (event.key === "Enter") {
+      event.currentTarget.click(); // Trigger click when Enter key is pressed
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      const newIndex =
+        focusedItemIndex > 0
+          ? focusedItemIndex - 1
+          : listItemRefs.current.length - 1;
+      setFocusedItemIndex(newIndex);
+      listItemRefs.current[newIndex]?.focus();
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      const newIndex =
+        focusedItemIndex < listItemRefs.current.length - 1
+          ? focusedItemIndex + 1
+          : 0;
+      setFocusedItemIndex(newIndex);
+      listItemRefs.current[newIndex]?.focus();
+    }
+  };
+
   return (
     <Main>
       <WelcomeDiv>
@@ -86,7 +129,21 @@ export const HomePage = () => {
       </WelcomeDiv>
       <ListContainer>
         <Link to="/subject/HTML">
-          <ListItem bgColor="htmlBg">
+          <ListItem
+            ref={(el) => listItemRefs.current.push(el)}
+            bgColor="htmlBg"
+            tabIndex={0} // Ensure list item is focusable
+            onKeyDown={(e) => handleKeyPress(e, 0)} // Handle keyboard events
+            aria-label="HTML"
+            role="option"
+            aria-selected={focusedItemIndex === 0 ? "true" : "false"}
+            style={{
+              backgroundColor:
+                focusedItemIndex === 0
+                  ? lightTheme.htmlBg
+                  : lightTheme.pureWhite,
+            }}
+          >
             <IconImage
               src="/assets/images/icon-html.svg"
               alt="HTML Icon"
@@ -96,7 +153,21 @@ export const HomePage = () => {
           </ListItem>
         </Link>
         <Link to="/subject/CSS">
-          <ListItem bgColor="cssBg">
+          <ListItem
+            ref={(el) => listItemRefs.current.push(el)}
+            bgColor="cssBg"
+            tabIndex={0}
+            onKeyDown={(e) => handleKeyPress(e, 1)}
+            aria-label="CSS"
+            role="option"
+            aria-selected={focusedItemIndex === 1 ? "true" : "false"}
+            style={{
+              backgroundColor:
+                focusedItemIndex === 1
+                  ? lightTheme.cssBg
+                  : lightTheme.pureWhite,
+            }}
+          >
             <IconImage
               src="/assets/images/icon-css.svg"
               alt="CSS Icon"
@@ -106,7 +177,19 @@ export const HomePage = () => {
           </ListItem>
         </Link>
         <Link to="/subject/JavaScript">
-          <ListItem bgColor="jsBg">
+          <ListItem
+            ref={(el) => listItemRefs.current.push(el)}
+            bgColor="jsBg"
+            tabIndex={0}
+            onKeyDown={(e) => handleKeyPress(e, 2)}
+            aria-label="JavaScript"
+            role="option"
+            aria-selected={focusedItemIndex === 2 ? "true" : "false"}
+            style={{
+              backgroundColor:
+                focusedItemIndex === 2 ? lightTheme.jsBg : lightTheme.pureWhite,
+            }}
+          >
             <IconImage
               src="/assets/images/icon-js.svg"
               alt="JavaScript Icon"
@@ -116,7 +199,21 @@ export const HomePage = () => {
           </ListItem>
         </Link>
         <Link to="/subject/Accessibility">
-          <ListItem bgColor="accessibilityBg">
+          <ListItem
+            ref={(el) => listItemRefs.current.push(el)}
+            bgColor="accessibilityBg"
+            tabIndex={0}
+            onKeyDown={(e) => handleKeyPress(e, 3)}
+            aria-label="Accessibility"
+            role="option"
+            aria-selected={focusedItemIndex === 3 ? "true" : "false"}
+            style={{
+              backgroundColor:
+                focusedItemIndex === 3
+                  ? lightTheme.accessibilityBg
+                  : lightTheme.pureWhite,
+            }}
+          >
             <IconImage
               src="/assets/images/icon-accessibility.svg"
               alt="Accessibility Icon"
