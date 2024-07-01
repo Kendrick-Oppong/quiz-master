@@ -15,11 +15,13 @@ import { CircleCheck, CircleX } from "lucide-react";
 import { useListNavigation } from "../../hooks/useListNavigation";
 import { ProgressBar } from "../../components";
 
+
 interface isActiveProp {
   isActive: boolean;
   isHovered: boolean;
 }
 
+// Styled components
 const QuestionHeader = styled.p`
   font-size: 1.3rem;
   margin-top: 2rem;
@@ -56,6 +58,7 @@ const OptionButton = styled.button<isActiveProp>`
   font-weight: 500;
   width: 100%;
   cursor: pointer;
+  color: ${(props) => props.theme.text} !important;
   transition: background-color 0.3s ease-in-out;
   display: flex;
   align-items: center;
@@ -70,6 +73,7 @@ const OptionButton = styled.button<isActiveProp>`
       props.isHovered ? props.theme.purple : "transparent"};
     margin-right: 0.5rem;
     padding: 0.3rem;
+    color: ${(props) => props.theme.greyNavy};
     border-radius: 0.3rem;
   }
 `;
@@ -81,10 +85,10 @@ const SubmitButton = styled.button`
   background-color: ${(props) => props.theme.purple};
   border: none;
   padding: 1.5rem;
+  color: ${(props) => props.theme.submitButton};
   border-radius: 0.5rem;
   font-weight: bold;
   font-family: "Rubik", sans-serif;
-  color: ${(props) => props.theme.pureWhite};
   font-size: 1.2rem;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
@@ -104,32 +108,42 @@ const ErrorMessage = styled.p`
   margin-top: 1rem;
 `;
 
+
 export const Questions = () => {
+  // Get quiz title from URL parameters
   const { title } = useParams<{ title: string }>();
+
+  // Find the corresponding quiz based on the title
   const quiz = quizzes.find(
     (quiz: { title: string }) =>
       quiz.title.toLowerCase() === title?.toLowerCase()
   );
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  // State for selected option, answer visibility, and error message
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Get the current question index from the Redux store
   const currentQuestionIndex = useAppSelector(getAllCurrentQuestionIndex);
 
+  // Custom hook for handling list navigation using keyboard
   const { listItemRefs, handleKeyPress, setFocusedItemIndex } =
     useListNavigation<HTMLButtonElement>(
       quiz?.questions[currentQuestionIndex].options.length || 0
     );
 
+  // Focus the first option button when the component mounts or the question index changes
   useEffect(() => {
     if (listItemRefs.current.length > 0) {
       listItemRefs.current[0]?.focus();
     }
   }, [currentQuestionIndex, listItemRefs]);
 
+  // Set quiz category and total number of questions in the Redux store
   useEffect(() => {
     if (quiz) {
       dispatch(
@@ -139,11 +153,13 @@ export const Questions = () => {
     }
   }, [quiz, dispatch]);
 
+  // Handle option selection
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
     setErrorMessage(null);
   };
 
+  // Handle form submission
   const handleSubmit = () => {
     if (!selectedOption) {
       setErrorMessage("Please select an answer");
@@ -162,6 +178,7 @@ export const Questions = () => {
     );
   };
 
+  // Handle navigation to the next question or score page
   const handleNextQuestion = () => {
     if (currentQuestionIndex < quiz!.questions.length - 1) {
       dispatch(nextQuestion());
@@ -173,10 +190,12 @@ export const Questions = () => {
     }
   };
 
+  // If quiz is not found, display an error message
   if (!quiz) {
     return <p>Quiz not found!</p>;
   }
 
+  // Get the current question and progress
   const currentQuestion = quiz.questions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / quiz.questions.length) * 100;
   const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
@@ -237,6 +256,7 @@ export const Questions = () => {
                   {optionLetter}
                 </span>
                 {option}
+                {/* Show icons based on the correctness of the selected option */}
                 {isCorrect && <CircleCheck color="#26d782" />}
                 {isIncorrect && <CircleX color="#ee5454" />}
               </OptionButton>
@@ -250,6 +270,7 @@ export const Questions = () => {
               : "Next Question"
             : "Submit Answer"}
         </SubmitButton>
+        {/* Display error message if no option is selected */}
         {errorMessage && (
           <ErrorMessage>
             <CircleX color="#ee5454" />

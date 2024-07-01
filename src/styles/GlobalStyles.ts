@@ -29,12 +29,12 @@ html {
     font-optical-sizing: auto;
     font-family: "Rubik", sans-serif;
     min-height: 100dvh;
-    background-image: url(./assets/images/pattern-background-desktop-light.svg);
+    background-color: ${(props) => props.theme.lightGrey};
+    color: ${(props) => props.theme.text};
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    background-image: url(${(props) => props.theme.backgroundImage});
     background-position: center;
     background-size: cover;
-    background-color: ${(props) => props.theme.lightGrey};
-    color: ${(props) => props.theme.darkNavy};
-
 
       @media (max-width: 768px) {
          padding: 1.5rem;
