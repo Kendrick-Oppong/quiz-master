@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { lightTheme } from "../../styles/themes";
+import { lightTheme, darkTheme } from "../../styles/themes";
 import { Link } from "react-router-dom";
 import { useListNavigation } from "../../hooks/useListNavigation";
 import { Main } from "../../styles/common";
@@ -48,8 +48,8 @@ const ListItem = styled.li<BgColorProps>`
   cursor: pointer;
   font-size: 1.75rem;
   border-radius: 1rem;
-  color: ${(props) => props.theme.darkNavy};
-  background-color: ${(props) => props.theme.pureWhite};
+  color: ${(props) => props.theme.text};
+  background-color: ${(props) => props.theme.pureWhite} !important;
   transition: background-color 0.3s ease-in-out;
 
   &:hover,
@@ -87,10 +87,17 @@ export const HomePage = () => {
       </WelcomeDiv>
       <ListContainer>
         {listItems.map((item, index) => (
-          <Link to={`/subject/${item}`} key={index}>
+          <Link
+            to={`/subject/${item === "JS" ? "JavaScript" : item}`}
+            key={index}
+          >
             <ListItem
               ref={(el) => (listItemRefs.current[index] = el)}
-              bgColor={`${item.toLowerCase()}Bg` as keyof typeof lightTheme}
+              bgColor={
+                `${item.toLowerCase()}Bg` as
+                  | keyof typeof lightTheme
+                  | keyof typeof darkTheme
+              }
               tabIndex={0}
               onKeyDown={(e) => handleKeyPress(e)}
               aria-label={item}
@@ -100,7 +107,9 @@ export const HomePage = () => {
                 backgroundColor:
                   focusedItemIndex === index
                     ? lightTheme[
-                        `${item.toLowerCase()}Bg` as keyof typeof lightTheme
+                        `${item.toLowerCase()}Bg` as
+                          | keyof typeof lightTheme
+                          | keyof typeof darkTheme
                       ]
                     : lightTheme.pureWhite,
               }}
@@ -108,7 +117,11 @@ export const HomePage = () => {
               <IconImage
                 src={`/assets/images/icon-${item.toLowerCase()}.svg`}
                 alt={`${item} Icon`}
-                bgColor={`${item.toLowerCase()}Bg` as keyof typeof lightTheme}
+                bgColor={
+                  `${item.toLowerCase()}Bg` as
+                    | keyof typeof lightTheme
+                    | keyof typeof darkTheme
+                }
               />
               <p>{item}</p>
             </ListItem>

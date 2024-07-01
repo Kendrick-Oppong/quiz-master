@@ -72,7 +72,7 @@ const PlayAgain = styled.button`
   padding: 1rem 2rem;
   background-color: ${(props) => props.theme.purple};
   font-family: "Rubik", sans-serif;
-  color: ${(props) => props.theme.pureWhite};
+  color: ${(props) => props.theme.submitButton};
   font-size: 1.2rem;
   border: none;
   cursor: pointer;

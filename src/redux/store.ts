@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import quizSliceReducer from "./features/quizSlice";
+import themeSliceReducer from "./features/themeSlice";
 
 export const store = configureStore({
   reducer: {
     quiz: quizSliceReducer,
+    theme: themeSliceReducer,
   },
 });
 
