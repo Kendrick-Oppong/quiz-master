@@ -18,8 +18,9 @@ Build out a quiz app based on provided designs using TypeScript and styled-compo
 - Vite
 - React
 - TypeScript
+- Redux Toolkit 
 - Styled-components
-- React Router
+- React Router Dom
 
 ## Screenshots
 
