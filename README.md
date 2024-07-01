@@ -23,11 +23,11 @@ Build out a quiz app based on provided designs using TypeScript and styled-compo
 
 ## Screenshots
 
-![Frontend Quiz Screenshot](./QuizScreenshot-1.png)
-![Frontend Quiz Screenshot](./QuizScreenshot-2.png)
-![Frontend Quiz Screenshot](./QuizScreenshot-3.png)
-![Frontend Quiz Screenshot](./QuizScreenshot-4.png)
-![Frontend Quiz Screenshot](./QuizScreenshot-5.png)
+![Frontend Quiz Screenshot](./src/QuizScreenshot-1.png)
+![Frontend Quiz Screenshot](./src/QuizScreenshot-2.png)
+![Frontend Quiz Screenshot](./src/QuizScreenshot-3.png)
+![Frontend Quiz Screenshot](./src/QuizScreenshot-4.png)
+![Frontend Quiz Screenshot](./src/QuizScreenshot-5.png)
 
 ## Setup and Installation
 
